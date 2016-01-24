@@ -16,8 +16,6 @@ public class RequestItem {
     public String requestUserName;
     public int requestSmilePercentage;
 
-
-
     public RequestItem() {
         this.items = new ArrayList<>();
     }

@@ -25,11 +25,14 @@ public class MainActivity extends AppCompatActivity {
         Button deleteall = (Button) findViewById(R.id.button3);
 
 
-        final DatabaseHelper database = new DatabaseHelper(this);
+        final DatabaseHelper database = DatabaseHelper.getInstance(MainActivity.this);
 
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                database.createTableIfNotExists();
 
                 SQLiteDatabase db = database.getReadableDatabase();
 
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 List<RequestItem> requestList = new ArrayList<>(set);
 
                 for (RequestItem items : requestList) {
-                    // send request in list
+                    //todo: send request using list then delete that request from table
                     Log.e("send REQUEST",
                             items._id + " id " +
                                     items.requestSmilePercentage + " smile " +
@@ -82,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // todo: delete all table when different user entered!
+                String loginedUserNameDynamic = "kola";
+
+                // when different user login the system, erase previous user's all unsent requests
+                if (!database.getUserNameFromDatabase().equals(loginedUserNameDynamic)) {
+                    database.deleteAllRequests();
+                    Log.e("DBTEST", "TABLE DELETED");
+                }
 
 
             }
